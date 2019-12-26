@@ -15,6 +15,8 @@ import {
 } from 'prop-types';
 import SVG from './SVG';
 
+const MAX_BULLETS_ON_SCREEN = 7;
+
 const screenChangeEvents = [
   'fullscreenchange',
   'MSFullscreenChange',
@@ -33,8 +35,6 @@ function isEnterOrSpaceKey(event) {
   const SPACEBAR_KEY_CODE = 62;
   return key === ENTER_KEY_CODE || key === SPACEBAR_KEY_CODE;
 }
-
-const MAX_BULLETS_ON_SCREEN = 7;
 
 export default class ImageGallery extends React.Component {
   static propTypes = {
@@ -155,46 +155,46 @@ export default class ImageGallery extends React.Component {
     slideOnThumbnailOver: false,
     swipeThreshold: 30,
     renderLeftNav: (onClick, disabled) => (
-      <button
-        type="button"
-        className="image-gallery-icon image-gallery-left-nav"
-        disabled={disabled}
-        onClick={onClick}
-        aria-label="Previous Slide"
-      >
-        <SVG icon="left" viewBox="6 0 12 24" />
-      </button>
+        <button
+            type="button"
+            className="image-gallery-icon image-gallery-left-nav"
+            disabled={disabled}
+            onClick={onClick}
+            aria-label="Previous Slide"
+        >
+          <SVG icon="left" viewBox="6 0 12 24" />
+        </button>
     ),
     renderRightNav: (onClick, disabled) => (
-      <button
-        type="button"
-        className="image-gallery-icon image-gallery-right-nav"
-        disabled={disabled}
-        onClick={onClick}
-        aria-label="Next Slide"
-      >
-        <SVG icon="right" viewBox="6 0 12 24" />
-      </button>
+        <button
+            type="button"
+            className="image-gallery-icon image-gallery-right-nav"
+            disabled={disabled}
+            onClick={onClick}
+            aria-label="Next Slide"
+        >
+          <SVG icon="right" viewBox="6 0 12 24" />
+        </button>
     ),
     renderPlayPauseButton: (onClick, isPlaying) => (
-      <button
-        type="button"
-        className="image-gallery-icon image-gallery-play-button"
-        onClick={onClick}
-        aria-label="Play or Pause Slideshow"
-      >
-        <SVG strokeWidth={2} icon={isPlaying ? 'pause' : 'play'} />
-      </button>
+        <button
+            type="button"
+            className="image-gallery-icon image-gallery-play-button"
+            onClick={onClick}
+            aria-label="Play or Pause Slideshow"
+        >
+          <SVG strokeWidth={2} icon={isPlaying ? 'pause' : 'play'} />
+        </button>
     ),
     renderFullscreenButton: (onClick, isFullscreen) => (
-      <button
-        type="button"
-        className="image-gallery-icon image-gallery-fullscreen-button"
-        onClick={onClick}
-        aria-label="Open Fullscreen"
-      >
-        <SVG strokeWidth={2} icon={isFullscreen ? 'minimize' : 'maximize'} />
-      </button>
+        <button
+            type="button"
+            className="image-gallery-icon image-gallery-fullscreen-button"
+            onClick={onClick}
+            aria-label="Open Fullscreen"
+        >
+          <SVG strokeWidth={2} icon={isFullscreen ? 'minimize' : 'maximize'} />
+        </button>
     ),
   };
 
@@ -234,7 +234,7 @@ export default class ImageGallery extends React.Component {
     // Used to update the throttle if slideDuration changes
     this.unthrottledSlideToIndex = this.slideToIndex;
     this.slideToIndex = throttle(
-      this.unthrottledSlideToIndex, props.slideDuration, { trailing: false },
+        this.unthrottledSlideToIndex, props.slideDuration, { trailing: false },
     );
 
     if (props.lazyLoad) {
@@ -282,7 +282,7 @@ export default class ImageGallery extends React.Component {
     // if slideDuration changes, update slideToIndex throttle
     if (prevProps.slideDuration !== slideDuration) {
       this.slideToIndex = throttle(
-        this.unthrottledSlideToIndex, slideDuration, { trailing: false },
+          this.unthrottledSlideToIndex, slideDuration, { trailing: false },
       );
     }
     if (lazyLoad && (!prevProps.lazyLoad || itemsChanged)) {
@@ -596,7 +596,7 @@ export default class ImageGallery extends React.Component {
       const thumbnailClass = item.thumbnailClass ? ` ${item.thumbnailClass}` : '';
       const handleRenderItem = item.renderItem || renderItem || this.renderItem;
       const handleRenderThumbInner = item.renderThumbInner
-        || renderThumbInner || this.renderThumbInner;
+          || renderThumbInner || this.renderThumbInner;
 
       const showItem = !lazyLoad || alignment || this.lazyLoaded[index];
       if (showItem && lazyLoad && !this.lazyLoaded[index]) {
@@ -606,23 +606,23 @@ export default class ImageGallery extends React.Component {
       const slideStyle = this.getSlideStyle(index);
 
       const slide = (
-        <div
-          key={`slide-${item.original}`}
-          tabIndex="-1"
-          className={`image-gallery-slide ${alignment} ${originalClass}`}
-          style={slideStyle}
-          onClick={onClick}
-          onKeyUp={this.handleSlideKeyUp}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onTouchStart={onTouchStart}
-          onMouseOver={onMouseOver}
-          onFocus={onMouseOver}
-          onMouseLeave={onMouseLeave}
-          role="button"
-        >
-          {showItem ? handleRenderItem(item) : <div style={{ height: '100%' }} />}
-        </div>
+          <div
+              key={`slide-${item.original}`}
+              tabIndex="-1"
+              className={`image-gallery-slide ${alignment} ${originalClass}`}
+              style={slideStyle}
+              onClick={onClick}
+              onKeyUp={this.handleSlideKeyUp}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+              onTouchStart={onTouchStart}
+              onMouseOver={onMouseOver}
+              onFocus={onMouseOver}
+              onMouseLeave={onMouseLeave}
+              role="button"
+          >
+            {showItem ? handleRenderItem(item) : <div style={{ height: '100%' }} />}
+          </div>
       );
 
       if (infinite) {
@@ -636,54 +636,97 @@ export default class ImageGallery extends React.Component {
 
       if (showThumbnails) {
         const igThumbnailClass = clsx(
-          'image-gallery-thumbnail',
-          thumbnailClass,
-          { active: currentIndex === index },
+            'image-gallery-thumbnail',
+            thumbnailClass,
+            { active: currentIndex === index },
         );
         thumbnails.push(
-          <button
-            key={`thumbnail-${item.original}`}
-            type="button"
-            tabIndex="0"
-            aria-pressed={currentIndex === index ? 'true' : 'false'}
-            aria-label={`Go to Slide ${index + 1}`}
-            className={igThumbnailClass}
-            onMouseLeave={slideOnThumbnailOver ? this.onThumbnailMouseLeave : null}
-            onMouseOver={event => this.handleThumbnailMouseOver(event, index)}
-            onFocus={event => this.handleThumbnailMouseOver(event, index)}
-            onKeyUp={event => this.handleThumbnailKeyUp(event, index)}
-            onClick={event => this.onThumbnailClick(event, index)}
-          >
-            {handleRenderThumbInner(item)}
-          </button>,
+            <button
+                key={`thumbnail-${item.original}`}
+                type="button"
+                tabIndex="0"
+                aria-pressed={currentIndex === index ? 'true' : 'false'}
+                aria-label={`Go to Slide ${index + 1}`}
+                className={igThumbnailClass}
+                onMouseLeave={slideOnThumbnailOver ? this.onThumbnailMouseLeave : null}
+                onMouseOver={event => this.handleThumbnailMouseOver(event, index)}
+                onFocus={event => this.handleThumbnailMouseOver(event, index)}
+                onKeyUp={event => this.handleThumbnailKeyUp(event, index)}
+                onClick={event => this.onThumbnailClick(event, index)}
+            >
+              {handleRenderThumbInner(item)}
+            </button>,
         );
       }
 
-      if (showBullets) {
-        // generate bullet elements and store them in array
-        const bulletOnClick = (event) => {
-          if (item.bulletOnClick) {
-            item.bulletOnClick({ item, itemIndex: index, currentIndex });
-          }
-          return this.slideToIndex.call(this, index, event);
-        };
-        const igBulletClass = clsx(
+      // if (showBullets) {
+      //   // generate bullet elements and store them in array
+      //   const bulletOnClick = (event) => {
+      //     if (item.bulletOnClick) {
+      //       item.bulletOnClick({ item, itemIndex: index, currentIndex });
+      //     }
+      //     return this.slideToIndex.call(this, index, event);
+      //   };
+      //   const igBulletClass = clsx(
+      //       'image-gallery-bullet',
+      //       item.bulletClass,
+      //       { active: currentIndex === index },
+      //   );
+      //   bullets.push(
+      //       <button
+      //           type="button"
+      //           key={`bullet-${item.original}`}
+      //           className={igBulletClass}
+      //           onClick={bulletOnClick}
+      //           aria-pressed={currentIndex === index ? 'true' : 'false'}
+      //           aria-label={`Go to Slide ${index + 1}`}
+      //       />,
+      //   );
+      // }
+    });
+
+    if (showBullets) {
+      const numOfBullets = Math.min(items.length, MAX_BULLETS_ON_SCREEN);
+
+      for (let i = 0; i < numOfBullets; i += 1) {
+        let isActive;
+        const classNames = [
           'image-gallery-bullet',
-          item.bulletClass,
-          { active: currentIndex === index },
-        );
+        ];
+
+        if (items.length <= MAX_BULLETS_ON_SCREEN) {
+          isActive = currentIndex === i;
+        } else {
+          const center = Math.floor((MAX_BULLETS_ON_SCREEN / 2));
+          if (currentIndex < center) isActive = currentIndex === i;
+          else if ((items.length) - currentIndex < (numOfBullets - center)) {
+            isActive = ((items.length) - currentIndex) === (numOfBullets - i);
+          } else {
+            isActive = i === center;
+
+            if (i === 0) {
+              classNames.push('first-smaller');
+            } else if (i === numOfBullets - 1) {
+              classNames.push('last-smaller');
+            }
+          }
+        }
+
+        if (isActive) {
+          classNames.push('active');
+        }
+
         bullets.push(
-          <button
-            type="button"
-            key={`bullet-${item.original}`}
-            className={igBulletClass}
-            onClick={bulletOnClick}
-            aria-pressed={currentIndex === index ? 'true' : 'false'}
-            aria-label={`Go to Slide ${index + 1}`}
-          />,
+            <button
+                type="button"
+                key={`bullet-${i}`}
+                className={classNames.join(' ')}
+                aria-pressed={isActive ? 'true' : 'false'}
+            />,
         );
       }
-    });
+    }
+
 
     return {
       slides,
@@ -706,8 +749,8 @@ export default class ImageGallery extends React.Component {
     const notGoingFromLastToFirst = !(previousIndex === totalSlides && currentIndex === 0);
 
     return slidingMoreThanOneSlideLeftOrRight
-      && notGoingFromFirstToLast
-      && notGoingFromLastToFirst;
+        && notGoingFromFirstToLast
+        && notGoingFromLastToFirst;
   }
 
   isFirstOrLastSlide(index) {
@@ -743,7 +786,7 @@ export default class ImageGallery extends React.Component {
       or last slide to show up during the transition
     */
     return !this.slideIsTransitioning(index)
-      || (this.ignoreIsTransitioning() && !this.isFirstOrLastSlide(index));
+        || (this.ignoreIsTransitioning() && !this.isFirstOrLastSlide(index));
   }
 
   slideThumbnailBar(previousIndex) {
@@ -989,9 +1032,9 @@ export default class ImageGallery extends React.Component {
     */
     const { onScreenChange } = this.props;
     const fullScreenElement = document.fullscreenElement
-      || document.msFullscreenElement
-      || document.mozFullScreenElement
-      || document.webkitFullscreenElement;
+        || document.msFullscreenElement
+        || document.mozFullScreenElement
+        || document.webkitFullscreenElement;
 
     if (onScreenChange) onScreenChange(fullScreenElement);
     this.setState({ isFullscreen: !!fullScreenElement });
@@ -1157,8 +1200,8 @@ export default class ImageGallery extends React.Component {
     if (!this.intervalId) {
       this.setState({ isPlaying: true });
       this.intervalId = window.setInterval(
-        this.pauseOrPlay,
-        Math.max(slideInterval, slideDuration),
+          this.pauseOrPlay,
+          Math.max(slideInterval, slideDuration),
       );
       if (onPlay && shouldCallOnPlay) {
         onPlay(currentIndex);
@@ -1198,51 +1241,51 @@ export default class ImageGallery extends React.Component {
     const handleImageError = onImageError || this.handleImageError;
 
     return (
-      <div>
-        {
-          item.imageSet ? (
-            <picture
-              onLoad={!this.isImageLoaded(item) ? onImageLoad : null}
-              onError={handleImageError}
-            >
-              {
-                item.imageSet.map(source => (
-                  <source
-                    key={source.media}
-                    media={source.media}
-                    srcSet={source.srcSet}
-                    type={source.type}
+        <div>
+          {
+            item.imageSet ? (
+                <picture
+                    onLoad={!this.isImageLoaded(item) ? onImageLoad : null}
+                    onError={handleImageError}
+                >
+                  {
+                    item.imageSet.map(source => (
+                        <source
+                            key={source.media}
+                            media={source.media}
+                            srcSet={source.srcSet}
+                            type={source.type}
+                        />
+                    ))
+                  }
+                  <img
+                      className="image-gallery-image"
+                      alt={item.originalAlt}
+                      src={item.original}
                   />
-                ))
-              }
-              <img
-                className="image-gallery-image"
-                alt={item.originalAlt}
-                src={item.original}
-              />
-            </picture>
-          ) : (
-            <img
-              className="image-gallery-image"
-              src={item.original}
-              alt={item.originalAlt}
-              srcSet={item.srcSet}
-              sizes={item.sizes}
-              title={item.originalTitle}
-              onLoad={!this.isImageLoaded(item) ? onImageLoad : null}
-              onError={handleImageError}
-            />
-          )
-        }
+                </picture>
+            ) : (
+                <img
+                    className="image-gallery-image"
+                    src={item.original}
+                    alt={item.originalAlt}
+                    srcSet={item.srcSet}
+                    sizes={item.sizes}
+                    title={item.originalTitle}
+                    onLoad={!this.isImageLoaded(item) ? onImageLoad : null}
+                    onError={handleImageError}
+                />
+            )
+          }
 
-        {
-          item.description && (
-            <span className="image-gallery-description">
+          {
+            item.description && (
+                <span className="image-gallery-description">
               {item.description}
             </span>
-          )
-        }
-      </div>
+            )
+          }
+        </div>
     );
   }
 
@@ -1251,22 +1294,22 @@ export default class ImageGallery extends React.Component {
     const handleThumbnailError = onThumbnailError || this.handleImageError;
 
     return (
-      <div className="image-gallery-thumbnail-inner">
-        <img
-          className="image-gallery-thumbnail-image"
-          src={item.thumbnail}
-          alt={item.thumbnailAlt}
-          title={item.thumbnailTitle}
-          onError={handleThumbnailError}
-        />
-        {
-          item.thumbnailLabel && (
-            <div className="image-gallery-thumbnail-label">
-              {item.thumbnailLabel}
-            </div>
-          )
-        }
-      </div>
+        <div className="image-gallery-thumbnail-inner">
+          <img
+              className="image-gallery-thumbnail-image"
+              src={item.thumbnail}
+              alt={item.thumbnailAlt}
+              title={item.thumbnailTitle}
+              onError={handleThumbnailError}
+          />
+          {
+            item.thumbnailLabel && (
+                <div className="image-gallery-thumbnail-label">
+                  {item.thumbnailLabel}
+                </div>
+            )
+          }
+        </div>
     );
   }
 
@@ -1298,256 +1341,119 @@ export default class ImageGallery extends React.Component {
     } = this.props;
 
     const thumbnailStyle = this.getThumbnailStyle();
-    const slides = [];
-    const thumbnails = [];
-    const bullets = [];
-
-    items.forEach((item, index) => {
-      const alignment = this.getAlignmentClassName(index);
-      const originalClass = item.originalClass ? ` ${item.originalClass}` : '';
-      const thumbnailClass = item.thumbnailClass ? ` ${item.thumbnailClass}` : '';
-      const handleRenderItem = item.renderItem || renderItem || this.renderItem;
-      const handleRenderThumbInner = item.renderThumbInner
-        || renderThumbInner || this.renderThumbInner;
-
-      const showItem = !lazyLoad || alignment || this.lazyLoaded[index];
-      if (showItem && lazyLoad && !this.lazyLoaded[index]) {
-        this.lazyLoaded[index] = true;
-      }
-
-      const slideStyle = this.getSlideStyle(index);
-
-      const slide = (
-        <div
-          key={`slide-${item.original}`}
-          tabIndex="-1"
-          className={`image-gallery-slide ${alignment} ${originalClass}`}
-          style={slideStyle}
-          onClick={onClick}
-          onKeyUp={this.handleSlideKeyUp}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-          onTouchStart={onTouchStart}
-          onMouseOver={onMouseOver}
-          onFocus={onMouseOver}
-          onMouseLeave={onMouseLeave}
-          role="button"
-        >
-          {showItem ? handleRenderItem(item) : <div style={{ height: '100%' }} />}
-        </div>
-      );
-
-      if (infinite) {
-        // don't add some slides while transitioning to avoid background transitions
-        if (this.shouldPushSlideOnInfiniteMode(index)) {
-          slides.push(slide);
-        }
-      } else {
-        slides.push(slide);
-      }
-
-      if (showThumbnails) {
-        thumbnails.push(
-          <button
-            key={`thumbnail-${item.original}`}
-            type="button"
-            tabIndex="0"
-            aria-pressed={currentIndex === index ? 'true' : 'false'}
-            aria-label={`Go to Slide ${index + 1}`}
-            className={
-              `image-gallery-thumbnail ${thumbnailClass} ${(currentIndex === index ? 'active' : '')}`
-            }
-            onMouseLeave={slideOnThumbnailOver ? this.onThumbnailMouseLeave : null}
-            onMouseOver={event => this.handleThumbnailMouseOver(event, index)}
-            onFocus={event => this.handleThumbnailMouseOver(event, index)}
-            onKeyUp={event => this.handleThumbnailKeyUp(event, index)}
-            onClick={event => this.onThumbnailClick(event, index)}
-          >
-            {handleRenderThumbInner(item)}
-          </button>,
-        );
-      }
-
-      // if (showBullets) {
-      //   // generate bullet elements and store them in array
-      //   const bulletOnClick = (event) => {
-      //     if (item.bulletOnClick) {
-      //       item.bulletOnClick({ item, itemIndex: index, currentIndex });
-      //     }
-      //     return this.slideToIndex.call(this, index, event);
-      //   };
-      //   bullets.push(
-      //     <button
-      //       type="button"
-      //       key={`bullet-${item.original}`}
-      //       className={[
-      //         'image-gallery-bullet',
-      //         currentIndex === index ? 'active' : '',
-      //         item.bulletClass || '',
-      //       ].join(' ')}
-      //       onClick={bulletOnClick}
-      //       aria-pressed={currentIndex === index ? 'true' : 'false'}
-      //       aria-label={`Go to Slide ${index + 1}`}
-      //     />,
-      //   );
-      // }
-    });
-
-    if (showBullets) {
-      const numOfBullets = Math.min(items.length, MAX_BULLETS_ON_SCREEN);
-
-      for (let i = 0; i < numOfBullets; i = i + 1) {
-        let isActive;
-        const classNames = [
-          'image-gallery-bullet',
-        ];
-
-        if (items.length <= MAX_BULLETS_ON_SCREEN) {
-          isActive = currentIndex === i;
-        } else {
-          const center = Math.floor((MAX_BULLETS_ON_SCREEN / 2));
-          if (currentIndex < center)  isActive = currentIndex === i;
-          else if ((items.length) - currentIndex < (numOfBullets - center)) {
-            isActive =  ((items.length) - currentIndex) === (numOfBullets - i);
-          } else {
-            isActive = i === center;
-
-            if (i === 0) {
-              classNames.push('first-smaller');
-            } else if (i === numOfBullets - 1) {
-              classNames.push('last-smaller');
-            }
-          }
-        }
-
-        if (isActive) {
-          classNames.push('active');
-        }
-
-        bullets.push(
-            <button
-                type="button"
-                key={`bullet-${i}`}
-                className={classNames.join(' ')}
-                aria-pressed={isActive ? 'true' : 'false'}
-            />,
-        );
-      }
-    }
-
     const { slides, thumbnails, bullets } = this.getSlideItems(items);
     const slideWrapperClass = clsx(
-      'image-gallery-slide-wrapper',
-      thumbnailPosition,
-      { 'image-gallery-rtl': isRTL },
+        'image-gallery-slide-wrapper',
+        thumbnailPosition,
+        { 'image-gallery-rtl': isRTL },
     );
 
     const slideWrapper = (
-      <div ref={this.imageGallerySlideWrapper} className={slideWrapperClass}>
-        {renderCustomControls && renderCustomControls()}
-        {
-          this.canSlide() ? (
-            <React.Fragment>
-              {
-                showNav && (
-                  <span key="navigation">
+        <div ref={this.imageGallerySlideWrapper} className={slideWrapperClass}>
+          {renderCustomControls && renderCustomControls()}
+          {
+            this.canSlide() ? (
+                <React.Fragment>
+                  {
+                    showNav && (
+                        <span key="navigation">
                     {renderLeftNav(this.slideLeft, !this.canSlideLeft())}
-                    {renderRightNav(this.slideRight, !this.canSlideRight())}
+                          {renderRightNav(this.slideRight, !this.canSlideRight())}
                   </span>
-                )
-              }
-              <Swipeable
-                className="image-gallery-swipe"
-                key="swipeable"
-                delta={0}
-                onSwiping={this.handleSwiping}
-                onSwiped={this.handleOnSwiped}
-              >
+                    )
+                  }
+                  <Swipeable
+                      className="image-gallery-swipe"
+                      key="swipeable"
+                      delta={0}
+                      onSwiping={this.handleSwiping}
+                      onSwiped={this.handleOnSwiped}
+                  >
+                    <div className="image-gallery-slides">
+                      {slides}
+                    </div>
+                  </Swipeable>
+                </React.Fragment>
+            ) : (
                 <div className="image-gallery-slides">
                   {slides}
                 </div>
-              </Swipeable>
-            </React.Fragment>
-          ) : (
-            <div className="image-gallery-slides">
-              {slides}
-            </div>
-          )
-        }
-        {showPlayButton && renderPlayPauseButton(this.togglePlay, isPlaying)}
-        {
-          showBullets && (
-            <div className="image-gallery-bullets">
-              <div
-                className="image-gallery-bullets-container"
-                role="navigation"
-                aria-label="Bullet Navigation"
-              >
-                {bullets}
-              </div>
-            </div>
-          )
-        }
-        {showFullscreenButton && renderFullscreenButton(this.toggleFullScreen, isFullscreen)}
-        {
-          showIndex && (
-            <div className="image-gallery-index">
+            )
+          }
+          {showPlayButton && renderPlayPauseButton(this.togglePlay, isPlaying)}
+          {
+            showBullets && (
+                <div className="image-gallery-bullets">
+                  <div
+                      className="image-gallery-bullets-container"
+                      role="navigation"
+                      aria-label="Bullet Navigation"
+                  >
+                    {bullets}
+                  </div>
+                </div>
+            )
+          }
+          {showFullscreenButton && renderFullscreenButton(this.toggleFullScreen, isFullscreen)}
+          {
+            showIndex && (
+                <div className="image-gallery-index">
               <span className="image-gallery-index-current">
                 {currentIndex + 1}
               </span>
-              <span className="image-gallery-index-separator">
+                  <span className="image-gallery-index-separator">
                 {indexSeparator}
               </span>
-              <span className="image-gallery-index-total">
+                  <span className="image-gallery-index-total">
                 {items.length}
               </span>
-            </div>
-          )
-        }
-      </div>
+                </div>
+            )
+          }
+        </div>
     );
 
     const igClass = clsx('image-gallery', additionalClass, { 'fullscreen-modal': modalFullscreen });
     const igContentClass = clsx('image-gallery-content', thumbnailPosition, { fullscreen: isFullscreen });
     const thumbnailWrapperClass = clsx(
-      'image-gallery-thumbnails-wrapper',
-      thumbnailPosition,
-      { 'thumbnails-wrapper-rtl': !this.isThumbnailVertical() && isRTL },
+        'image-gallery-thumbnails-wrapper',
+        thumbnailPosition,
+        { 'thumbnails-wrapper-rtl': !this.isThumbnailVertical() && isRTL },
     );
     return (
-      <div
-        ref={this.imageGallery}
-        className={igClass}
-        aria-live="polite"
-      >
-        <div className={igContentClass}>
-          {(thumbnailPosition === 'bottom' || thumbnailPosition === 'right') && slideWrapper}
-          {
-            showThumbnails && (
-              <div
-                className={thumbnailWrapperClass}
-                style={this.getThumbnailBarHeight()}
-              >
-                <div
-                  className="image-gallery-thumbnails"
-                  ref={this.thumbnailsWrapper}
-                >
+        <div
+            ref={this.imageGallery}
+            className={igClass}
+            aria-live="polite"
+        >
+          <div className={igContentClass}>
+            {(thumbnailPosition === 'bottom' || thumbnailPosition === 'right') && slideWrapper}
+            {
+              showThumbnails && (
                   <div
-                    ref={this.thumbnails}
-                    className="image-gallery-thumbnails-container"
-                    style={thumbnailStyle}
-                    aria-label="Thumbnail Navigation"
+                      className={thumbnailWrapperClass}
+                      style={this.getThumbnailBarHeight()}
                   >
-                    {thumbnails}
+                    <div
+                        className="image-gallery-thumbnails"
+                        ref={this.thumbnailsWrapper}
+                    >
+                      <div
+                          ref={this.thumbnails}
+                          className="image-gallery-thumbnails-container"
+                          style={thumbnailStyle}
+                          aria-label="Thumbnail Navigation"
+                      >
+                        {thumbnails}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            )
-          }
-          {(thumbnailPosition === 'top' || thumbnailPosition === 'left') && slideWrapper}
-        </div>
+              )
+            }
+            {(thumbnailPosition === 'top' || thumbnailPosition === 'left') && slideWrapper}
+          </div>
 
-      </div>
+        </div>
     );
   }
 }
