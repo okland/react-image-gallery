@@ -533,7 +533,7 @@ var ImageGallery = function (_React$Component) {
         var slide = _react2.default.createElement(
           'div',
           {
-            key: 'slide-' + item.original,
+            key: 'slide-' + item.original + '-' + index,
             tabIndex: '-1',
             className: 'image-gallery-slide ' + alignment + ' ' + originalClass,
             style: slideStyle,
@@ -564,7 +564,7 @@ var ImageGallery = function (_React$Component) {
           thumbnails.push(_react2.default.createElement(
             'button',
             {
-              key: 'thumbnail-' + item.original,
+              key: 'thumbnail-' + item.original + '-' + index,
               type: 'button',
               tabIndex: '0',
               'aria-pressed': currentIndex === index ? 'true' : 'false',

@@ -607,7 +607,7 @@ export default class ImageGallery extends React.Component {
 
       const slide = (
           <div
-              key={`slide-${item.original}`}
+              key={`slide-${item.original}-${index}`}
               tabIndex="-1"
               className={`image-gallery-slide ${alignment} ${originalClass}`}
               style={slideStyle}
@@ -642,7 +642,7 @@ export default class ImageGallery extends React.Component {
         );
         thumbnails.push(
             <button
-                key={`thumbnail-${item.original}`}
+                key={`thumbnail-${item.original}-${index}`}
                 type="button"
                 tabIndex="0"
                 aria-pressed={currentIndex === index ? 'true' : 'false'}
